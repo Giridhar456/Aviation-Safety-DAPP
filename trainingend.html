@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AVIATION UNIVERSITY</title>
+        <link href="style.css" rel="stylesheet">
+		<script src="./node_modules/web3/dist/web3.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    </head>
+	<body background="" style="background-size: auto;background-repeat: no-repeat;">
+		<a href="index.html"><button>Home</button></a>
+		<a href="getdetails.html"><button>Get Data</button></a>
+		<div class="form-register">
+            <center>
+				<br/><br/><br/><br/><br/>
+				<!--<img src="logo.jpg" class="form-logo">-->
+                <h1 class="form-title">Training Ending Details</h1>
+                <input type="text" placeholder="Address" id="_address"><br/>
+                <input type="text" placeholder="TOKm" id="tokm"><br/>
+                <button id="is_button">Submit</button>
+            </center>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script>
+         if (typeof web3 !== 'undefined') {
+           web3 = new Web3(web3.currentProvider);
+       } else {
+           web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+       }
+       web3.eth.defaultAccount = web3.eth.getAccounts[0];
+       var trainingdetailsContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "DATE",
+				"type": "string"
+			},
+			{
+				"name": "ToKm",
+				"type": "uint256"
+			}
+		],
+		"name": "InsertTrainingEndDetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "DATE",
+				"type": "string"
+			},
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "FlightModelName",
+				"type": "string"
+			},
+			{
+				"name": "FromKm",
+				"type": "uint256"
+			}
+		],
+		"name": "InsertTrainingStartDetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "DATE",
+				"type": "string"
+			}
+		],
+		"name": "GetTrainingDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+    var trainingdetails= trainingdetailsContract.at('0x6ba4dba2d46fe91424ff09d43445ad456f1dfc0b');
+		console.log(trainingdetails);
+	$("#is_button").click(function(){
+        trainingdetails.InsertTrainingEndDetails($("#_address").val(),$("#tokm").val(),(err,res)=>{
+            if(err){
+                alert('Erroe');
+            }
+        })
+        });
+        </script>
+    </body>
+</html>

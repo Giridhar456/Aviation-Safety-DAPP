@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AVIATION UNIVERSITY</title>
+        <link href="style.css" rel="stylesheet">
+		<script src="./node_modules/web3/dist/web3.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    </head>
+	<body background="" style="background-size: auto;background-repeat: no-repeat;">
+		<a href="index.html"><button>Home</button></a>
+        <div class="form-register">
+            <center>
+                <!--<img src="logo.jpg" class="form-logo">-->
+                <h1 class="form-title">Get Student Data</h1>
+                <input type="text" placeholder="Address" id="_address"><br/>
+                <button id="is_button_1" style="font-size: 15px;">GetStudentData</button><br/>
+                <h1 class="form-title">Get Training Data</h1>
+                <input type="text" placeholder="Day/Month/Year" id="DATE"><br/>
+                <button id="is_button_0" style="font-size: 15px;">GetTrainingData</button><br/>
+            </center>
+        </div>
+        <div class="output-form">
+            <h1 id="output"></h1>
+            <h1 id="output1" style="margin-top: -290px;"></h1>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script>
+         if (typeof web3 !== 'undefined') {
+           web3 = new Web3(web3.currentProvider);
+       } else {
+           web3 = new Web3(new Web3.providers.HttpProvider("http://13.83.91.1:8083/api/node/rpc"));
+       }
+       web3.eth.defaultAccount = web3.eth.getAccounts[0];
+       var studentpilotContract = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getdatas",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "StudentContactAddress",
+				"type": "string"
+			},
+			{
+				"name": "StudentContactNumber",
+				"type": "uint256"
+			},
+			{
+				"name": "StudentEmailId",
+				"type": "string"
+			}
+		],
+		"name": "UpdateStudentData",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "GetStudentdata",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "studentdata",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "StudentName",
+				"type": "string"
+			},
+			{
+				"name": "StudentQualification",
+				"type": "string"
+			},
+			{
+				"name": "StudentContactAddress",
+				"type": "string"
+			},
+			{
+				"name": "StudentContactNumber",
+				"type": "uint256"
+			},
+			{
+				"name": "StudentEmailId",
+				"type": "string"
+			},
+			{
+				"name": "studentInstituteName",
+				"type": "string"
+			}
+		],
+		"name": "Insertdetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "studentname",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentqualification",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentcontactaddress",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentcontactnumber",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "studentemailid",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentinstitutename",
+				"type": "string"
+			}
+		],
+		"name": "StudentEvent",
+		"type": "event"
+	}
+]);
+       var trainingdetailsContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "DATE",
+				"type": "string"
+			},
+			{
+				"name": "ToKm",
+				"type": "uint256"
+			}
+		],
+		"name": "InsertTrainingEndDetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "DATE",
+				"type": "string"
+			},
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "FlightModelName",
+				"type": "string"
+			},
+			{
+				"name": "FromKm",
+				"type": "uint256"
+			}
+		],
+		"name": "InsertTrainingStartDetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "DATE",
+				"type": "string"
+			}
+		],
+		"name": "GetTrainingDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+    var studentpilot= studentpilotContract.at('0x8997490a3376d9a3db71a1625272e415360e0d42');
+    var trainingdetails= trainingdetailsContract.at('0x6ba4dba2d46fe91424ff09d43445ad456f1dfc0b');
+    console.log(studentpilot);
+    console.log(trainingdetails);
+	$("#is_button_1").click(function(){
+        studentpilot.GetStudentdata($("#_address").val(),function(error, result){
+            if(!error){
+                $("#output").html('Name:'+result[0]+'<br/> Qualification:'+result[1]+'<br/> From:'+result[2]+'<br/> Contact Number:'+result[3]+'<br/>Mail-id:'+result[4]+'<br/>Institute:'+result[5]);
+            }
+        })
+        });
+        $("#is_button_0").click(function(){
+        trainingdetails.GetTrainingDetails($("#DATE").val(),function(error, result){
+            if(!error){
+                $("#output1").html('Flight ID:'+result[0]+'<br/>No:Of KM Travelled: '+result[1]+'<br/> Time Taken: '+result[2]);
+            }
+        })
+        });
+        </script>
+    </body>
+</html>

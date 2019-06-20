@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AVIATION UNIVERSITY</title>
+        <link href="style.css" rel="stylesheet">
+		<script src="./node_modules/web3/dist/web3.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    </head>
+	<body background="" style="background-size: auto;background-repeat: no-repeat;">
+		<a href="trainingstart.html"><button>Training</button></a>
+        <div class="form-register">
+            <center>
+                <!--<img src="logo.jpg" class="form-logo">-->
+                <h1 class="form-title">Student Registration</h1>
+                <input type="text" placeholder="Address" id="_address"><br/>
+                <input type="text" placeholder="StudentName" id="studentname"><br/>
+                <input type="text" placeholder="RegistrationId" id="registrationid"><br/>
+                <input type="text" placeholder="StudentQualification" id="studentqualification"><br/>
+                <input type="text" placeholder="StudentContactAddress" id="studentcontactaddress"><br/>
+                <input type="text" placeholder="StudentContactNumber" id="studentcontactnumber"><br/>
+                <input type="text" placeholder="StudentEmail-Id" id="studentemailid"><br/>
+                <input type="text" placeholder="studentInstituteName" id="studentinstitutename"><br/>
+                <button id="is_button">Register</button>
+            </center>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script>
+         if (typeof web3 !== 'undefined') {
+           web3 = new Web3(web3.currentProvider);
+       } else {
+           web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+       }
+       web3.eth.defaultAccount = web3.eth.getAccounts[0];
+       var studentpilotContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "StudentName",
+				"type": "string"
+			},
+			{
+				"name": "StudentQualification",
+				"type": "string"
+			},
+			{
+				"name": "StudentContactAddress",
+				"type": "string"
+			},
+			{
+				"name": "StudentContactNumber",
+				"type": "uint256"
+			},
+			{
+				"name": "StudentEmailId",
+				"type": "string"
+			},
+			{
+				"name": "studentInstituteName",
+				"type": "string"
+			}
+		],
+		"name": "Insertdetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "StudentContactAddress",
+				"type": "string"
+			},
+			{
+				"name": "StudentContactNumber",
+				"type": "uint256"
+			},
+			{
+				"name": "StudentEmailId",
+				"type": "string"
+			}
+		],
+		"name": "UpdateStudentData",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "studentname",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentqualification",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentcontactaddress",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentcontactnumber",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "studentemailid",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentinstitutename",
+				"type": "string"
+			}
+		],
+		"name": "StudentEvent",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getdatas",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "GetStudentdata",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "studentdata",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+    var studentpilot= studentpilotContract.at('0x25a949db2d9b2456f42f83e77b2923541b8f784e');
+		console.log(studentpilot);
+	$("#is_button").click(function(){
+        studentpilot.Insertdetails($("#_address").val(),$("#studentname").val(),$("#studentqualification").val(),$("#studentcontactaddress").val(),$("#studentcontactnumber").val(),$("#studentemailid").val(),$("#studentinstitutename").val(),(err,res)=>{
+            if(err){
+                alert('Erroe');
+            }
+        })
+        });
+        </script>
+    </body>
+</html>
